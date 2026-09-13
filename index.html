@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ángel Luis Sánchez - Portfolio Profesional</title>
+<meta name="description" content="Portfolio profesional de Ángel Luis Sánchez Pérez, Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM).">
+
+<!-- External Typography -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  // Tailwind CSS Custom Theme Extensions
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            bg: '#14141F',
+            panel: '#232336',
+            panelLight: '#32324D',
+            border: '#0D0D14',
+            text: '#E2E8F0',
+            accent: '#FF3366',
+            sky: '#3399FF',
+            skyLight: '#70B5FF',
+            mint: '#34D399',
+            gold: '#FFD700',
+            amber: '#5C4033',
+            amberHover: '#705040'
+          }
+        },
+        fontFamily: {
+          pixel: ['"JetBrains Mono"', 'monospace'],
+          sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        }
+      }
+    }
+  }
+</script>
+
+<style>
+  /* Layout & Smooth Behavior */
+  html {
+    scroll-padding-top: 6rem;
+  }
+
+  body {
+    cursor: default;
+    background-color: #06070d;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  a, button, input, textarea, .interactive {
+    cursor: pointer !important;
+  }
+
+  /* Canvas Animation Layers */
+  .bg-animated-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    background: #06070d;
+  }
+
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: 0.35;
+    animation: orbMove 18s ease-in-out infinite alternate;
+    will-change: transform;
+  }
+
+  .glow-1 {
+    top: -10%;
+    left: 10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, #3399FF 0%, transparent 70%);
+  }
+
+  .glow-2 {
+    bottom: -10%;
+    right: 5%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, #34D399 0%, transparent 70%);
+    animation-delay: -6s;
+  }
+
+  .glow-3 {
+    top: 40%;
+    left: 50%;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, #FF3366 0%, transparent 70%);
+    animation-delay: -12s;
+  }
+
+  @keyframes orbMove {
+    0% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(80px, 60px) scale(1.15); }
+    100% { transform: translate(-60px, -40px) scale(0.9); }
+  }
+
+  .pixel-grid-bg {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+    background-size: 36px 36px;
+    animation: gridScroll 25s linear infinite;
+  }
+
+  @keyframes gridScroll {
+    0% { background-position: 0 0; }
+    100% { background-position: 36px 72px; }
+  }
+
+  .stars-layer {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      radial-gradient(1.5px 1.5px at 10% 20%, rgba(255,255,255,0.8) 100%, transparent),
+      radial-gradient(2px 2px at 30% 65%, rgba(52,211,153,0.9) 100%, transparent),
+      radial-gradient(1.5px 1.5px at 50% 15%, rgba(255,217,0,0.8) 100%, transparent),
+      radial-gradient(2px 2px at 70% 80%, rgba(51,153,255,0.9) 100%, transparent),
+      radial-gradient(1.5px 1.5px at 90% 35%, rgba(255,255,255,0.8) 100%, transparent);
+    background-size: 300px 300px;
+    animation: starsTwinkle 4s ease-in-out infinite alternate;
+    will-change: opacity, transform;
+  }
+
+  @keyframes starsTwinkle {
+    0% { opacity: 0.4; transform: translateY(0); }
+    100% { opacity: 0.9; transform: translateY(-8px); }
+  }
+
+  .scanline {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0),
+      rgba(255,255,255,0) 50%,
+      rgba(0, 0, 0, 0.25) 50%,
+      rgba(0, 0, 0, 0.25)
+    );
+    background-size: 100% 4px;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  /* Custom UI Card & Button Components */
+  .pixel-panel {
+    background: rgba(26, 26, 42, 0.88);
+    border: 4px solid #0D0D14;
+    box-shadow: 
+      inset 4px 4px 0px rgba(255, 255, 255, 0.08),
+      inset -4px -4px 0px rgba(0, 0, 0, 0.5),
+      0 12px 30px rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(8px);
+    transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.25s ease, border-color 0.25s ease;
+  }
+
+  .pixel-panel-hover:hover,
+  article.pixel-panel:hover {
+    transform: translateY(-8px) scale(1.015);
+    border-color: #34D399;
+    box-shadow: 
+      inset 4px 4px 0px rgba(255, 255, 255, 0.15),
+      inset -4px -4px 0px rgba(0, 0, 0, 0.6),
+      0 18px 35px rgba(52, 211, 153, 0.28);
+  }
+
+  .pixel-btn {
+    background: #5C4033;
+    border: 4px solid #2B170B;
+    box-shadow: 
+      inset 3px 3px 0px rgba(255, 255, 255, 0.15),
+      inset -3px -3px 0px rgba(0, 0, 0, 0.5);
+    transition: all 0.15s ease;
+  }
+
+  .pixel-btn:hover {
+    background: #705040;
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 
+      inset 3px 3px 0px rgba(255, 255, 255, 0.25),
+      0 8px 20px rgba(255, 215, 0, 0.3);
+  }
+
+  .pixel-btn:active {
+    transform: translateY(2px) scale(0.98);
+    box-shadow: inset 3px 3px 0px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Inventario / Stack Tecnológico */
+  .inv-slot {
+    width: 68px;
+    height: 68px;
+    background: #1A1A28;
+    border: 3px solid #0D0D14;
+    box-shadow: inset 3px 3px 0px rgba(0,0,0,0.6), inset -2px -2px 0px rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer !important;
+  }
+
+  .inv-slot span {
+    transition: transform 0.2s ease, filter 0.2s ease;
+  }
+
+  .inv-slot:hover {
+    border-color: #FFD700;
+    background: #2D2D42;
+    transform: translateY(-8px) rotate(-3deg) scale(1.12);
+    box-shadow: 0 12px 24px rgba(255, 217, 0, 0.35);
+  }
+
+  .inv-slot:hover span {
+    transform: scale(1.2);
+    filter: drop-shadow(0 0 8px currentColor);
+  }
+
+  .inv-slot .tooltip {
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    bottom: 115%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0D0D14;
+    border: 3px solid #5C4033;
+    color: #E2E8F0;
+    text-align: center;
+    padding: 10px 14px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 0.9rem;
+    white-space: nowrap;
+    z-index: 50;
+    box-shadow: 0 6px 12px rgba(0,0,0,0.7);
+    transition: opacity 0.15s ease;
+    pointer-events: none;
+  }
+
+  .inv-slot:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
+
+  /* Etiquetas de Tecnologías en Proyectos */
+  .tech-tag {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid #374151;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: inline-block;
+    user-select: none;
+  }
+
+  .tech-tag:hover {
+    background: #3399FF;
+    color: #06070d;
+    border-color: #FFD700;
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 6px 16px rgba(51, 153, 255, 0.5);
+    font-weight: 800;
+  }
+
+  /* Actitudes y Soft Skills */
+  .skill-badge {
+    background: rgba(0, 0, 0, 0.6);
+    border: 1px solid #374151;
+    padding: 0.35rem 0.65rem;
+    color: #34D399;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    cursor: pointer !important;
+    display: inline-block;
+    user-select: none;
+  }
+
+  .skill-badge:hover {
+    background: #34D399;
+    color: #06070d;
+    border-color: #FFD700;
+    transform: translateY(-4px) scale(1.1);
+    box-shadow: 0 6px 15px rgba(52, 211, 153, 0.5);
+    font-weight: 800;
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 0px #000;
+  }
+
+  @keyframes fillBar {
+    from { width: 0%; }
+    to { width: 100%; }
+  }
+  .animate-bar {
+    animation: fillBar 1.2s ease-out forwards;
+  }
+
+  .smooth-progress {
+    transition: width 0.18s cubic-bezier(0.25, 1, 0.5, 1);
+    will-change: width;
+  }
+</style>
+</head>
+<body class="text-brand-text font-sans text-base antialiased">
+
+<!-- Animated Canvas Background -->
+<div class="bg-animated-container" aria-hidden="true">
+  <div class="glow-orb glow-1"></div>
+  <div class="glow-orb glow-2"></div>
+  <div class="glow-orb glow-3"></div>
+  <div class="pixel-grid-bg"></div>
+  <div class="stars-layer"></div>
+  <div class="scanline"></div>
+</div>
+
+<!-- Scroll Progress Bar -->
+<div class="fixed top-0 left-0 w-full h-1 bg-[#0D0D14] z-[100] pointer-events-none" aria-hidden="true">
+  <div id="scroll-progress-bar" class="h-full bg-gradient-to-r from-blue-700 via-brand-sky to-brand-skyLight w-0 shadow-[0_0_8px_rgba(51,153,255,0.95)] smooth-progress"></div>
+</div>
+
+<!-- Navigation Bar -->
+<header>
+  <nav class="fixed top-1 w-full z-50 pixel-panel rounded-none border-t-0 border-l-0 border-r-0 bg-opacity-95 backdrop-blur-md" aria-label="Navegación principal">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+      <a href="#inicio" class="font-pixel text-xs md:text-sm font-bold text-brand-mint text-shadow interactive">
+        &gt; Ángel_Luis.dev
+      </a>
+      <div class="hidden md:flex gap-6 font-pixel text-xs font-semibold">
+        <a href="#habilidades" class="hover:text-brand-mint interactive">Habilidades</a>
+        <a href="#trayectoria" class="hover:text-brand-mint interactive">Trayectoria</a>
+        <a href="#tecnologias" class="hover:text-brand-mint interactive">Tecnologías</a>
+        <a href="#proyectos" class="hover:text-brand-mint interactive">Proyectos</a>
+        <a href="#contacto" class="hover:text-brand-mint interactive">Contacto</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main class="pt-28 pb-20">
+  
+  <!-- Hero Section -->
+  <section id="inicio" class="max-w-4xl mx-auto px-4 py-10 scroll-mt-24">
+    <div class="pixel-panel pixel-panel-hover p-8 text-center relative overflow-hidden">
+      
+      <p class="font-pixel text-xs md:text-sm text-brand-gold mb-4 text-shadow font-semibold">[ Perfil: Desarrollador DAM ]</p>
+      <h1 class="font-pixel text-2xl md:text-4xl leading-tight text-shadow mb-6 text-white font-extrabold tracking-tight">
+        ÁNGEL LUIS<br>SÁNCHEZ PÉREZ
+      </h1>
+      
+      <p class="font-sans text-base md:text-lg text-gray-300 max-w-2xl mx-auto mb-8 leading-relaxed">
+        Técnico Superior en Desarrollo de Aplicaciones Multiplataforma (DAM) orientado a la arquitectura backend, implementación de bases de datos relacionales y Programación Orientada a Objetos (POO). Enfocado en el desarrollo de código limpio, eficiente y trabajo colaborativo.
+      </p>
+
+      <!-- Primary Action Buttons -->
+      <div class="flex flex-wrap justify-center gap-4 font-pixel text-xs font-bold">
+        <a href="#proyectos" class="pixel-btn text-white px-6 py-3.5 interactive">Ver Proyectos</a>
+        <a href="#contacto" class="pixel-btn bg-brand-bg text-white px-6 py-3.5 interactive border-gray-700">Contactar</a>
+        
+        <!-- PDF Download CTA -->
+        <a href="CV-Angel-Luis-Sanchez-Perez.pdf" download="CV-Angel-Luis-Sanchez-Perez.pdf" class="pixel-btn !bg-emerald-700 hover:!bg-emerald-600 text-white px-6 py-3.5 interactive border-emerald-900 shadow-lg flex items-center gap-2">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M13 8V2H7v6H2l8 8 8-8h-5zM0 18h20v2H0v-2z"/>
+          </svg>
+          Descargar CV (PDF)
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Key Metrics / Core Skills -->
+  <section id="habilidades" class="max-w-4xl mx-auto px-4 py-6 scroll-mt-24">
+    <h2 class="sr-only">Habilidades Principales</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      <div class="pixel-panel pixel-panel-hover p-6">
+        <h3 class="font-pixel text-xs text-brand-accent text-shadow mb-3 font-bold">Programación Backend & POO</h3>
+        <div class="w-full bg-black h-7 border-2 border-gray-800 p-0.5 relative">
+          <div class="bg-brand-accent h-full animate-bar" style="width: 90%;"></div>
+          <span class="absolute inset-0 flex items-center justify-center font-pixel text-xs text-white text-shadow font-semibold">Java / C#</span>
+        </div>
+      </div>
+      <div class="pixel-panel pixel-panel-hover p-6">
+        <h3 class="font-pixel text-xs text-brand-sky text-shadow mb-3 font-bold">Bases de Datos & Lenguajes Web</h3>
+        <div class="w-full bg-black h-7 border-2 border-gray-800 p-0.5 relative">
+          <div class="bg-brand-sky h-full animate-bar" style="width: 85%;"></div>
+          <span class="absolute inset-0 flex items-center justify-center font-pixel text-xs text-white text-shadow font-semibold">SQL / MySQL / HTML5 / CSS3</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Timeline (Education & Experience) -->
+  <section id="trayectoria" class="max-w-4xl mx-auto px-4 py-10 scroll-mt-24">
+    <h2 class="font-pixel text-base md:text-xl text-shadow mb-8 text-center text-brand-gold font-bold">
+      ~ Formación Académica y Experiencia ~
+    </h2>
+    
+    <div class="space-y-6 relative before:absolute before:inset-0 before:ml-5 before:-translate-x-px md:before:mx-auto md:before:translate-x-0 before:h-full before:w-1 before:bg-brand-border">
+      
+      <!-- Timeline Node: DAM -->
+      <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+        <div class="flex items-center justify-center w-10 h-10 border-4 border-brand-border bg-brand-mint text-black shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-pixel text-sm font-bold" aria-hidden="true">
+          1
+        </div>
+        <article class="pixel-panel pixel-panel-hover w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-5">
+          <div class="flex justify-between items-center mb-1">
+            <h3 class="font-pixel text-sm text-brand-mint font-bold">FP Superior en DAM</h3>
+            <span class="font-pixel text-[10px] text-brand-gold bg-black/40 px-2 py-0.5 border border-gray-700">2025 – 2027</span>
+          </div>
+          <p class="font-pixel text-xs text-gray-400 mb-2">Campus Cámara FP Superior</p>
+          <p class="font-sans text-sm text-gray-300 leading-relaxed">
+            Especialización en desarrollo de aplicaciones multiplataforma, arquitectura backend, diseño de bases de datos relacionales y POO.
+          </p>
+        </article>
+      </div>
+
+      <!-- Timeline Node: Private Tutor -->
+      <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+        <div class="flex items-center justify-center w-10 h-10 border-4 border-brand-border bg-brand-sky text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-pixel text-sm font-bold" aria-hidden="true">
+          2
+        </div>
+        <article class="pixel-panel pixel-panel-hover w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-5">
+          <div class="flex justify-between items-center mb-1">
+            <h3 class="font-pixel text-sm text-brand-sky font-bold">Profesor Particular Académico</h3>
+            <span class="font-pixel text-[10px] text-gray-400 bg-black/40 px-2 py-0.5 border border-gray-700">2023 – 2025</span>
+          </div>
+          <p class="font-sans text-sm text-gray-300 leading-relaxed">
+            Clases particulares a estudiantes de Educación Secundaria Obligatoria (ESO) especializadas en las asignaturas de Matemáticas y Física.
+          </p>
+        </article>
+      </div>
+
+      <!-- Timeline Node: Sports Coach / Instructor -->
+      <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+        <div class="flex items-center justify-center w-10 h-10 border-4 border-brand-border bg-brand-gold text-black shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-pixel text-sm font-bold" aria-hidden="true">
+          3
+        </div>
+        <article class="pixel-panel pixel-panel-hover w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-5">
+          <div class="flex justify-between items-center mb-1">
+            <h3 class="font-pixel text-sm text-brand-gold font-bold">Monitor y Entrenador</h3>
+            <span class="font-pixel text-[10px] text-gray-400 bg-black/40 px-2 py-0.5 border border-gray-700">2022 – 2025</span>
+          </div>
+          <p class="font-pixel text-xs text-gray-400 mb-2">Hapkido Aljarafe (Palomares del Río)</p>
+          <p class="font-sans text-sm text-gray-300 leading-relaxed">
+            Coordinación de grupos infantiles en escuela de verano, organización de actividades recreativas e impartición de clases de Hapkido y meditación.
+          </p>
+        </article>
+      </div>
+
+      <!-- Timeline Node: High School -->
+      <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+        <div class="flex items-center justify-center w-10 h-10 border-4 border-brand-border bg-gray-600 text-white shadow shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-pixel text-sm font-bold" aria-hidden="true">
+          4
+        </div>
+        <article class="pixel-panel pixel-panel-hover w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-5">
+          <div class="flex justify-between items-center mb-1">
+            <h3 class="font-pixel text-sm text-gray-200 font-bold">Bachillerato Tecnológico</h3>
+            <span class="font-pixel text-[10px] text-gray-400 bg-black/40 px-2 py-0.5 border border-gray-700">2022 – 2024</span>
+          </div>
+          <p class="font-pixel text-xs text-gray-400">Colegio Aljarafe S.C.A.</p>
+        </article>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Technology & Tooling Grid -->
+  <section id="tecnologias" class="max-w-4xl mx-auto px-4 py-10 scroll-mt-24">
+    <div class="pixel-panel pixel-panel-hover p-8">
+      <h2 class="font-pixel text-base md:text-lg mb-6 text-brand-gold text-shadow text-center font-bold">Stack de Tecnologías y Herramientas</h2>
+      
+      <div class="flex flex-wrap justify-center gap-4">
+        
+        <div class="inv-slot interactive" tabindex="0" aria-label="Java">
+          <span class="font-pixel text-base font-bold text-orange-500">J</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">Java</span><br>
+            <span class="text-gray-400">Lenguaje de Programación</span>
+          </div>
+        </div>
+
+        <div class="inv-slot interactive" tabindex="0" aria-label="C Sharp">
+          <span class="font-pixel text-sm font-bold text-purple-400">C#</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">C#</span><br>
+            <span class="text-gray-400">Lenguaje de Programación</span>
+          </div>
+        </div>
+
+        <div class="inv-slot interactive" tabindex="0" aria-label="SQL y MySQL">
+          <span class="font-pixel text-xs font-bold text-blue-400">SQL</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">SQL / MySQL</span><br>
+            <span class="text-gray-400">Consultas y Diseños Relacionales</span>
+          </div>
+        </div>
+
+        <div class="inv-slot interactive" tabindex="0" aria-label="HTML5 y CSS3">
+          <span class="font-pixel text-xs font-bold text-yellow-400">H5</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">HTML5 & CSS3</span><br>
+            <span class="text-gray-400">Lenguajes de Marcas y Estilos</span>
+          </div>
+        </div>
+
+        <div class="inv-slot interactive" tabindex="0" aria-label="XML">
+          <span class="font-pixel text-xs font-bold text-emerald-400">XML</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">XML</span><br>
+            <span class="text-gray-400">Lenguaje de Marcas</span>
+          </div>
+        </div>
+
+        <div class="inv-slot interactive" tabindex="0" aria-label="Git y Control de Versiones">
+          <span class="font-pixel text-xs font-bold text-red-400">GIT</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">Git / GitHub / GitLab</span><br>
+            <span class="text-gray-400">Control de Versiones</span>
+          </div>
+        </div>
+
+        <div class="inv-slot interactive" tabindex="0" aria-label="Docker y VirtualBox">
+          <span class="font-pixel text-xs font-bold text-cyan-400">DOC</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">Docker & VirtualBox</span><br>
+            <span class="text-gray-400">Contenedores y Virtualización</span>
+          </div>
+        </div>
+
+        <div class="inv-slot interactive" tabindex="0" aria-label="Entornos de desarrollo IDEs">
+          <span class="font-pixel text-xs font-bold text-pink-400">IDE</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">IDEs y Entornos</span><br>
+            <span class="text-gray-400">VS Code, IntelliJ, NetBeans, Eclipse</span>
+          </div>
+        </div>
+
+        <div class="inv-slot interactive" tabindex="0" aria-label="Figma y Canva">
+          <span class="font-pixel text-xs font-bold text-purple-300">FIG</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">Figma & Canva</span><br>
+            <span class="text-gray-400">Diseño y Prototipado</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Languages & Soft Skills Footer -->
+      <div class="mt-8 pt-6 border-t border-gray-800 flex flex-wrap justify-between items-center gap-4 text-xs font-pixel">
+        <div>
+          <span class="text-brand-gold font-bold">🌐 Idioma:</span> <span class="text-gray-300">Inglés (Nivel B1)</span>
+        </div>
+        <div class="flex flex-wrap gap-2">
+          <span class="skill-badge interactive">Trabajo en equipo</span>
+          <span class="skill-badge interactive">Comunicación</span>
+          <span class="skill-badge interactive">Adaptabilidad</span>
+          <span class="skill-badge interactive">Constancia</span>
+          <span class="skill-badge interactive">Empatía</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Featured Portfolio Projects -->
+  <section id="proyectos" class="max-w-4xl mx-auto px-4 py-10 scroll-mt-28">
+    <h2 class="font-pixel text-base md:text-xl text-shadow mb-8 text-center text-brand-gold font-bold">
+      Proyecto Destacado
+    </h2>
+
+    <div class="max-w-xl mx-auto">
+      
+      <!-- Project Item: Athletic Cronos -->
+      <article class="pixel-panel p-6 group flex flex-col justify-between">
+        <div>
+          <div class="flex justify-between items-start gap-2 mb-3">
+            <h3 class="font-pixel text-xs md:text-sm text-brand-mint text-shadow font-bold">Athletic Cronos</h3>
+            <span class="bg-brand-border border border-gray-700 px-2 py-1 font-pixel text-[10px] text-gray-400 shrink-0">Web / Frontend</span>
+          </div>
+          <p class="font-sans text-sm text-gray-300 mb-6 leading-relaxed">
+            Sitio web oficial para un club deportivo. Incluye gestión visual de la plantilla por posiciones (jugadores y cuerpo técnico) y un calendario interactivo con seguimiento de resultados de la temporada.
+          </p>
+        </div>
+        <div>
+          <div class="flex flex-wrap gap-2 font-pixel text-[10px] mb-4 font-semibold">
+            <span class="tech-tag px-2.5 py-1 text-gray-200 interactive">HTML5</span>
+            <span class="tech-tag px-2.5 py-1 text-gray-200 interactive">CSS3</span>
+            <span class="tech-tag px-2.5 py-1 text-gray-200 interactive">CSS Grid</span>
+            <span class="tech-tag px-2.5 py-1 text-gray-200 interactive">Responsive</span>
+          </div>
+          <div class="flex flex-wrap gap-4 items-center">
+            <a href="https://angelsanchezdev66.github.io/Athletic-Cronos/" target="_blank" rel="noopener noreferrer" class="inline-block text-brand-mint hover:text-white font-pixel text-xs font-bold interactive">&gt;&gt; Ver demo en vivo</a>
+            <a href="https://github.com/angelsanchezdev66/Athletic-Cronos" target="_blank" rel="noopener noreferrer" class="inline-block text-brand-gold hover:text-white font-pixel text-xs font-bold interactive">&gt;&gt; Ver código fuente</a>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Contact Section & Direct Outlets -->
+  <section id="contacto" class="max-w-3xl mx-auto px-4 py-10 space-y-6 scroll-mt-24">
+    
+    <div class="pixel-panel pixel-panel-hover p-6">
+      <h2 class="font-pixel text-xs md:text-sm text-brand-gold text-shadow mb-4 text-center font-bold">Redes y Contacto Directo</h2>
+      <div class="flex flex-wrap justify-center gap-4 font-pixel text-xs font-semibold">
+        
+        <a href="https://github.com/angelsanchezdev66" target="_blank" rel="noopener noreferrer" class="inv-slot interactive group !w-auto !h-auto px-4 py-3 flex gap-3 items-center" aria-label="GitHub de Ángel Luis">
+          <span class="text-white text-sm font-bold">GH</span>
+          <span class="text-brand-mint text-xs">GitHub</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">GitHub</span><br>
+            <span class="text-gray-400">Ver proyectos</span>
+          </div>
+        </a>
+
+        <a href="https://www.linkedin.com/in/angelluissanchezperez" target="_blank" rel="noopener noreferrer" class="inv-slot interactive group !w-auto !h-auto px-4 py-3 flex gap-3 items-center" aria-label="LinkedIn de Ángel Luis">
+          <span class="text-brand-sky text-sm font-bold">IN</span>
+          <span class="text-brand-sky text-xs">LinkedIn</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">LinkedIn</span><br>
+            <span class="text-gray-400">Perfil profesional</span>
+          </div>
+        </a>
+
+        <a href="https://mail.google.com/mail/?view=cm&fs=1&to=angelsanchezperez00@gmail.com" target="_blank" rel="noopener noreferrer" class="inv-slot interactive group !w-auto !h-auto px-4 py-3 flex gap-3 items-center" aria-label="Enviar Email Directo">
+          <span class="text-brand-gold text-sm font-bold">@</span>
+          <span class="text-brand-gold text-xs">Email Directo</span>
+          <div class="tooltip" role="tooltip">
+            <span class="text-brand-mint font-bold text-base">angelsanchezperez00@gmail.com</span><br>
+            <span class="text-gray-400">Tel: 644 57 23 42 | Sevilla, Palomares del Río</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+
+    <!-- Formspree Mail Form -->
+    <div class="pixel-panel pixel-panel-hover p-6">
+      <div class="flex items-center gap-4 mb-4 border-b border-gray-800 pb-4">
+        <div class="w-10 h-10 bg-brand-border border-2 border-gray-600 flex items-center justify-center font-pixel text-[9px] font-bold leading-none text-brand-mint shrink-0" aria-hidden="true">
+          MAIL
+        </div>
+        <h2 class="font-pixel text-sm text-white font-bold">Formulario de Contacto</h2>
+      </div>
+
+      <form action="https://formspree.io/f/xqpkjapn" method="POST" class="space-y-4 font-sans text-sm">
+        <div>
+          <label for="name" class="sr-only">Nombre o empresa</label>
+          <input type="text" id="name" name="name" required placeholder="Su nombre o empresa..." class="w-full bg-brand-bg border-2 border-gray-700 text-white p-3 focus:outline-none focus:border-brand-mint interactive">
+        </div>
+        <div>
+          <label for="email" class="sr-only">Correo electrónico</label>
+          <input type="email" id="email" name="email" required placeholder="Su correo electrónico..." class="w-full bg-brand-bg border-2 border-gray-700 text-white p-3 focus:outline-none focus:border-brand-mint interactive">
+        </div>
+        <div>
+          <label for="message" class="sr-only">Mensaje</label>
+          <textarea id="message" name="message" rows="3" required placeholder="Escriba aquí su mensaje..." class="w-full bg-brand-bg border-2 border-gray-700 text-white p-3 focus:outline-none focus:border-brand-mint resize-none interactive"></textarea>
+        </div>
+        <button type="submit" class="pixel-btn text-white w-full py-4 font-pixel text-xs font-bold text-shadow interactive">
+          Enviar Mensaje
+        </button>
+      </form>
+    </div>
+  </section>
+
+</main>
+
+<footer class="bg-[#0D0D14] border-t-4 border-[#232336] py-6 text-center">
+  <p class="font-pixel text-xs text-gray-500">
+    © 2026 Ángel Luis Sánchez Pérez. | Sevilla, España.
+  </p>
+</footer>
+
+<script>
+  // Dynamic Scroll Progress Calculation
+  let ticking = false;
+
+  function updateScrollProgress() {
+    const winScroll = window.scrollY || document.documentElement.scrollTop;
+    const height = document.documentElement.scrollHeight - window.innerHeight;
+    const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+    
+    const progressBar = document.getElementById('scroll-progress-bar');
+    if (progressBar) {
+      progressBar.style.width = scrolled + '%';
+    }
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      window.requestAnimationFrame(updateScrollProgress);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  updateScrollProgress();
+</script>
+
+</body>
+</html>
